@@ -47,6 +47,7 @@ export default class Autocomplete extends Component {
     confirmOnBlur: true,
     showNoOptionsFound: true,
     showAllValues: false,
+    asyncResults: false,
     required: false,
     tNoResults: () => 'No results found',
     tAssistiveHint: () => 'When autocomplete results are available use up and down arrows to review and enter to select.  Touch device users, explore by touch or with swipe gestures.',
@@ -66,7 +67,8 @@ export default class Autocomplete extends Component {
       query: props.defaultValue,
       validChoiceMade: false,
       selected: null,
-      ariaHint: true
+      ariaHint: true,
+      waitingForResults: false
     }
 
     this.handleComponentBlur = this.handleComponentBlur.bind(this)
@@ -210,7 +212,7 @@ export default class Autocomplete extends Component {
   }
 
   handleInputChange (event) {
-    const { minLength, source, showAllValues } = this.props
+    const { minLength, source, showAllValues, asyncResults } = this.props
     const autoselect = this.hasAutoselect()
     const query = event.target.value
     const queryEmpty = query.length === 0
@@ -224,13 +226,19 @@ export default class Autocomplete extends Component {
 
     const searchForOptions = showAllValues || (!queryEmpty && queryChanged && queryLongEnough)
     if (searchForOptions) {
+      if (asyncResults) {
+        this.setState({
+          waitingForResults: true
+        })
+      }
       source(query, (options) => {
         const optionsAvailable = options.length > 0
         this.setState({
           menuOpen: optionsAvailable,
           options,
           selected: (autoselect && optionsAvailable) ? 0 : -1,
-          validChoiceMade: false
+          validChoiceMade: false,
+          waitingForResults: false
         })
       })
     } else if (queryEmpty || !queryLongEnough) {
@@ -418,7 +426,7 @@ export default class Autocomplete extends Component {
       tAssistiveHint,
       dropdownArrow: dropdownArrowFactory
     } = this.props
-    const { focused, hovered, menuOpen, options, query, selected, ariaHint, validChoiceMade } = this.state
+    const { focused, hovered, menuOpen, options, query, selected, ariaHint, validChoiceMade, waitingForResults } = this.state
     const autoselect = this.hasAutoselect()
 
     const inputFocused = focused === -1
@@ -426,9 +434,10 @@ export default class Autocomplete extends Component {
     const queryNotEmpty = query.length !== 0
     const queryLongEnough = query.length >= minLength
     const showNoOptionsFound = this.props.showNoOptionsFound &&
-      inputFocused && noOptionsAvailable && queryNotEmpty && queryLongEnough
+      inputFocused && noOptionsAvailable && queryNotEmpty && queryLongEnough && !waitingForResults
 
     const wrapperClassName = `${cssNamespace}__wrapper`
+    const waitingForResultsClassName = waitingForResults ? ` ${cssNamespace}__wait-result`: ''
 
     const inputClassName = `${cssNamespace}__input`
     const componentIsFocused = focused !== null
@@ -470,7 +479,7 @@ export default class Autocomplete extends Component {
     }
 
     return (
-      <div className={wrapperClassName} onKeyDown={this.handleKeyDown}>
+      <div className={`${wrapperClassName}${waitingForResultsClassName}`} onKeyDown={this.handleKeyDown}>
         <Status
           id={id}
           length={options.length}

@@ -2,6 +2,13 @@
   position: relative;
 }
 
+.autocomplete__wait-result input {
+  background-image: url(data:image/gif;base64,R0lGODlhIgAOAIQRAOjp6dTW19ze3+Xm54iKjevs7IKEh/f396Olp5ianPz8/Judn9fY2YGDhp+ho4CChdHT1P///////////////////////////////////////////////////////////yH/C05FVFNDQVBFMi4wAwEAAAAh/hFDcmVhdGVkIHdpdGggR0lNUAAh+QQJMgAfACwAAAEAIgAMAAAFVOAnjmRpnmiqrmzrighBICYgCEV956jz/A8HCQApQgBD4xFlAD4MpIBSEJ2iGs5G1cjYFrunhXNBGiiRI7MRbTokfokDSTEIBAYluh3/6vv/gIEfIQAh+QQJMgAfACwAAAEAIgAMAAAFWuAnjmRpnmiqrmzrioUgACZCEIgJyEUKQEAIbeR4GB8O0i84NAmCkADJcHwYSAGoAMWASkeNagMLZaCWwAFpUV2QBtCmaRAIDBSkQ8KYOJAUdHYvg4SFhociIQAh+QQBMgAfACwAAAEAIgAMAAAFWeAnjmRpnmiqrmzrioUgAGY8mwhBICkA/RDayAcUihyP5MOBEgAhAZITGB0ZlA8DivGsirhUUgPbQBF/A9IZkh4tsIvUIBAYKErz+n10SCQTBy+Cg4SFhh8hADs=);
+  background-repeat: no-repeat;
+  background-position-x: right;
+  background-position-y: center;
+}
+
 .autocomplete__hint,
 .autocomplete__input {
   -webkit-appearance: none;

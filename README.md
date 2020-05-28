@@ -175,6 +175,13 @@ function suggest (query, populateResults) {
 }
 ```
 
+If the results are not available immediately due to them being fetch from an API or similar then see then the `asyncResults` option should be set to `true`.
+
+#### `asyncResults` (default: `false`)
+
+Type: `Boolean`
+
+Indicates that the callback function passed to a user defined `source` function will be called asynchronously; for example once results have been received from a call to an API.
 ### Other options
 
 #### `autoselect` (default: `false`)
@@ -277,6 +284,7 @@ This object defines templates (functions) that are used for displaying parts of 
 Type: `Function`
 
 A function that gets passed an object with the property `className` (`{ className: '' }`) and should return a string of HTML or a (P)React element. :warning: **Caution:** because this function allows you to output arbitrary HTML, you should [make sure it's trusted](https://en.wikipedia.org/wiki/Cross-site_scripting), and accessible.
+
 
 ### Internationalization
 
