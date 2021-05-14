@@ -437,7 +437,7 @@ export default class Autocomplete extends Component {
       inputFocused && noOptionsAvailable && queryNotEmpty && queryLongEnough && !waitingForResults
 
     const wrapperClassName = `${cssNamespace}__wrapper`
-    const waitingForResultsClassName = waitingForResults ? ` ${cssNamespace}__wait-result`: ''
+    const waitingForResultsClassName = waitingForResults ? ` ${cssNamespace}__wait-result` : ''
 
     const inputClassName = `${cssNamespace}__input`
     const componentIsFocused = focused !== null
